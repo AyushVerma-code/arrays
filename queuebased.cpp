@@ -1,50 +1,82 @@
-#include<iostream.h>
-#include<conio.h>
-#include<string.h>
-#include<fstream.h>
-#include<stdio.h>
+include<iostream.h>
+#include<process.h>
 
-void wordcount()
+int q[5];
+int front;
+int rear=front=-1;
+
+void insert(int Q[],int val)
 {
-  fstream file;
-  file.open("diary1.txt",ios::in|ios::out);
-
-  char ans='y';
-  char word[500];
-
-  while (ans=='y')
+  if(rear==4)
   {
-    cout<<"\n\nEnter the string word by word ";
-    gets(word);
-    file<<word;
-    cout<<"\nDo you want to continue ";
-    cin>>ans;
+    cout<<"OVERFLOW!!!!";
+    exit(0);
   }
 
-    int count=0;
-    file.close();
-    file.open("diary1.txt",ios::in);
-    while(!file.eof())
-    {
-      file.getline(word,3);
-      if (strcmp(word,"my")==0|| strcmp(word,"me")==0)
-      {
-	count++;
-      }
-    }
-
-    cout<<"\n\nThe count is "<<count;
-    file.close();
-
-
+  else if(rear==-1)
+  {
+    front=rear=0;
+    Q[rear]=val;
+    cout<<"\nItem added";
+  }
 
 }
 
+void deletion(int Q[])
+{
+  if(front==-1)
+  {
+    cout<<"UNDERFLOW!!!!";
+    exit(0);
+  }
+
+  else
+  {
+    cout<<"\nData to be deleted is "<<Q[front];
+    if(front==rear)
+    {
+      front=rear=-1;
+    }
+    else
+    {
+      front++;
+    }
+  }
+}
 
 void main()
 {
-  clrscr();
-  wordcount();
-  getch();
+  int val;
+  int ch;
+  char ans='y';
 
+  while(ans=='y')
+  {
+    cout<<"\n\n\n****MAIN MENU****";
+    cout<<"\n\n1.Insert to queue ";
+    cout<<"\n\n2.Delete from queue ";
+    cout<<"\n\n3.Exit ";
+
+    cout<<"\n\n\nEnter your choice ";
+    cin>>ch;
+
+    switch(ch)
+    {
+      case 1: cout<<"\nEnter the value";
+	      cin>>val;
+
+	      insert(q,val);
+	      break;
+
+      case 2: deletion(q);
+	      break;
+
+      case 3: exit(0);
+
+    }
+
+    cout<<"\n\nWish to enter more ";
+    cin>>ans;
+
+  }
 }
